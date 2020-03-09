@@ -1,0 +1,21 @@
+TO LEARN
+    how to make a particel system / effect in javascript
+    how web sockets actually work
+    
+    i need to read gameprogrammingpatters to code the movement part
+
+    hwo to make "server .. up and running "appear like the output of banner ?
+
+
+TODO
+    visit opengameart.com or other platforms to find game art / sprites related to our game.
+
+selfProgress
+    found this on superuser.com/questions/1052795/selecting-columns-in-vs-code/1381127
+    select columns by holding down Shift+Alt, then click and drag with the mouse. This can also be done using just the keyboard by holding down Ctrl+Shift+Alt and then using the arrow keys.select columns by holding down Shift+Alt, then click and drag with the mouse. This can also be done using just the keyboard by holding down Ctrl+Shift+Alt and then using the arrow keys.
+
+
+IDEAS
+    how about i make it into a 3d voxel game ?
+    should have a city in background (by which i mean chance to showcase beautiful pixel art) ...
+    ... and skyscrapers should constantly come in the players may to restrict motion or act as destructible etc;
