@@ -1,21 +1,41 @@
 TO LEARN
     how to make a particel system / effect in javascript
     how web sockets actually work
-    
-    i need to read gameprogrammingpatters to code the movement part
+    TILEMAP AND CAMERA
 
     hwo to make "server .. up and running "appear like the output of banner ?
+    DONE
+        i need to read gameprogrammingpatters to code the movement part
 
 
 TODO
-    visit opengameart.com or other platforms to find game art / sprites related to our game.
+    make experimentation branch
+    setup npm start;
+    DONE visit opengameart.com or other platforms to find game art / sprites related to our game.
 
 selfProgress
     found this on superuser.com/questions/1052795/selecting-columns-in-vs-code/1381127
     select columns by holding down Shift+Alt, then click and drag with the mouse. This can also be done using just the keyboard by holding down Ctrl+Shift+Alt and then using the arrow keys.select columns by holding down Shift+Alt, then click and drag with the mouse. This can also be done using just the keyboard by holding down Ctrl+Shift+Alt and then using the arrow keys.
 
+    i liked the ready method and the update method
+    
+    beginPath and closePath methods
+    https://stackoverflow.com/questions/22432036/do-i-have-to-have-the-content-beginpath-and-content-closepath
 
 IDEAS
+    make the space ship tilt while moving up or down
+
     how about i make it into a 3d voxel game ?
     should have a city in background (by which i mean chance to showcase beautiful pixel art) ...
     ... and skyscrapers should constantly come in the players may to restrict motion or act as destructible etc;
+
+
+i figured that delay should nt be there in the bullet class
+
+
+
+3/10/2020 4:20 pm
+
+do the destroy method of bullet class
+use frames to evaluate next time for shooting
+implement the gunPoints array

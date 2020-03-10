@@ -45,6 +45,10 @@ function __loop__(time = null)
     // render Players
     for (let p of  players){
         p.update();
+        for (let b of p.bullets){
+            b.update();
+            b.render();
+        }
         p.render();
     }
     requestAnimationFrame(__loop__,time);

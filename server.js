@@ -31,6 +31,13 @@ let gameServer = http.createServer((req, res)=>
         res.setHeader("content-type", "text/js");
         res.end(script);        
     }
+    else if (url == "/bullet.js")
+    {
+        script = fs.readFileSync("./bullet.js","utf8");
+        res.statusCode = 200;
+        res.setHeader("content-type", "text/js");
+        res.end(script);        
+    }
     else
     {
         res.statusCode = 404;
