@@ -6,7 +6,11 @@ to make the development process simpler i have decided to not take the dir varia
 TODO:: 1. collision detection
 
 SUGGESTION::
+    maybe we can check for a circular !
     add this.bulletno to parameters and then in destroy do delete this.parent[this.bulletno]
+
+issue ::
+    new when this.destroy is called a few other instances of the bullets are also removed from this.parent.bullets[];
 */
 
 class Bullet
@@ -32,6 +36,7 @@ class Bullet
         this.x += this.speed;
         if(this.x > width)
         {
+            console.log("destroyed");
             this.destroy();
         }
     }
@@ -57,10 +62,20 @@ class Bullet
 
     destroy = function()
     {
-        // this.parent.bullets
-        let a = this.parent.bullets.find((val, index)=>
-        {
-            // code
-        })
+        // i have an interesting theory as to why only half the bullets were being destroyed
+        // console.log(this.parent.bullets.length)
+        // this.parent.bullets.find((val, index)=>
+        // {
+        //     // code
+        //     try{
+        //         JSON.stringify(val);
+        //     } catch(e){
+        //         this.parent.bullets.splice(index,1);
+        //         console.log(" :: spliced");
+        //     }
+        // })
+
+        // wait a second shouldnt we just remove the 1st element because it ought to be the first 
+        this.parent.bullets.splice(0,1);
     }
 }

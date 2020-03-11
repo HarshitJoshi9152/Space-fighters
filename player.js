@@ -16,6 +16,7 @@ other attributes meet the requirements example velocity
 we should implement the shoot function by taking into account the no.of
 frames and not the time
 
+Gunpoints should be an array
 
 TODO :: 1.calculate the velocity of the plane.
         2. add the velocity to the bulletSpeed when firing.
@@ -34,7 +35,7 @@ class Player
     constructor(name, ctx)
     {
         this.name = name;
-        this.shootdelay = 200; // time in ms
+        this.shootdelay = 100; // time in ms
         this.x = 100;
         this.y = 100;
         this.speed = 10;
@@ -42,7 +43,7 @@ class Player
         this.health = 100;
         
         this.gunPoint = {
-            x:this.x + this.side,
+            x: this.x + this.side,
             y: this.y + this.side/2
         }
         this.isReady = false;
@@ -57,15 +58,16 @@ class Player
             "d":false,
             " ":false
         };
+        // BULLETS
         this.bullets = [];
-        this.bulletSpeed = 20;
-
-        this.keysPressedBuffer = JSON.parse(JSON.stringify(this.keysPressed));
-        this.someKeyIsPressed = false;
+        this.bulletSpeed = 10;
         this.lastShootingTime;
         this.totalShotsThisInterval = 0;
         this.shotsAtOneTime = 1;
+
+        this.someKeyIsPressed = false;
         this.ctx = ctx;
+        this.totalShots = 0;
     }
     render = function()
     {
@@ -86,33 +88,26 @@ class Player
     {
         // movement
         if(this.keysPressed.ArrowRight || this.keysPressed.d){
-            this.x += tzhis.speed;
+            this.x += this.speed;
+            this.gunPoint.x += this.speed;
         }
         if(this.keysPressed.ArrowLeft || this.keysPressed.a){
             this.x -= this.speed;
+            this.gunPoint.x -= this.speed;
         }
         if(this.keysPressed.ArrowUp || this.keysPressed.w){
             this.y -= this.speed;
+            this.gunPoint.y -= this.speed;
         }
         if(this.keysPressed.ArrowDown || this.keysPressed.s){
             this.y += this.speed;
-        }
-        if(JSON.stringify(this.keysPressed) !== JSON.stringify(this.keysPressedBuffer))
-        {
-            this.gunPoint = {
-                x:this.x + this.side,
-                y: this.y + this.side/2
-            }
-            this.keysPressedBuffer = JSON.parse(JSON.stringify(this.keysPressed))
+            this.gunPoint.y += this.speed;
         }
         
         // this one is for shooting
         if(this.keysPressed[" "]){
             this.shoot();
-            console.log("  pressed")
         }
-        
-        // console.log(this.keysPressed);
     }
 
     ready = function() // shouldnt ready be called listen ? and we should have a new function called "move" for movement
@@ -124,7 +119,6 @@ class Player
         {
             // code....
             let {key, keyCode} = event;
-            console.log(key);
             if(this.keysPressed.hasOwnProperty(key.toString()))
             {
                 this.keysPressed[key] = true;
@@ -153,16 +147,15 @@ class Player
     {
 
         // we could have also used the no. of frames !!
-        console.table(this.lastShootingTime, this.shootdelay, Date.now())
         if(this.totalShotsThisInterval == 0)
         {
-            // this is the first shot
             this.lastShootingTime = Date.now();
             for(let i = 0; i < this.shotsAtOneTime; i++)
             {
                 this.bullets.push(new Bullet(this.gunPoint, this.bulletSpeed, this.damage, this, this.ctx));
+                this.totalShotsThisInterval += this.shotsAtOneTime;
+                this.totalShots += this.shotsAtOneTime;
             }
-            this.totalShotsThisInterval += this.shotsAtOneTime;
         }
         else if(this.lastShootingTime + this.shootdelay < Date.now())
         {
@@ -170,8 +163,9 @@ class Player
             for(let i = 0; i < this.shotsAtOneTime; i++)
             {
                 this.bullets.push(new Bullet(this.gunPoint, this.bulletSpeed, this.damage, this, this.ctx));
+                this.totalShotsThisInterval += this.shotsAtOneTime;
+                this.totalShots += this.shotsAtOneTime;
             }
-            this.totalShotsThisInterval += this.shotsAtOneTime;
         }
     }
 }
