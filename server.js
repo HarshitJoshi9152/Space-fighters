@@ -38,6 +38,13 @@ let gameServer = http.createServer((req, res)=>
         res.setHeader("content-type", "text/js");
         res.end(script);        
     }
+    else if (url == "/UI.js")
+    {
+        script = fs.readFileSync("./UI.js","utf8");
+        res.statusCode = 200;
+        res.setHeader("content-type", "text/js");
+        res.end(script);        
+    }
     else
     {
         res.statusCode = 404;

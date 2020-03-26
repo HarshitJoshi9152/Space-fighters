@@ -16,6 +16,11 @@ other attributes meet the requirements example velocity
 we should implement the shoot function by taking into account the no.of
 frames and not the time
 
+OBS
+we could have calculated this.base using the euclid_dist function oncy
+ once and thus avoiding the unnecessary complexity of using 
+ the pythagoras theorem, we could also have just used this.side (as 3rd option)
+
 Gunpoints should be an array
 
 TODO :: 1.calculate the velocity of the plane.
@@ -40,12 +45,10 @@ class Player
         this.y = 100;
         this.speed = 10;
         this.side = 50;
+        this.median = this.calculate_base();
         this.health = 100;
         
-        this.gunPoint = {
-            x: this.x + this.side,
-            y: this.y + this.side/2
-        }
+        this.gunPoint = this.getGunPointLocation()
         this.isReady = false;
         this.keysPressed = {
             "ArrowRight":false,
@@ -60,7 +63,7 @@ class Player
         };
         // BULLETS
         this.bullets = [];
-        this.bulletSpeed = 10;
+        this.bulletSpeed = this.speed + 10;
         this.lastShootingTime;
         this.totalShotsThisInterval = 0;
         this.shotsAtOneTime = 1;
@@ -72,7 +75,8 @@ class Player
     render = function()
     {
         this.ctx.save();
-        this.ctx.strokeStyle = "#868676"
+        this.ctx.fillStyle = "#787878";
+        this.ctx.strokeStyle = "#868676";
         this.ctx.beginPath();
         this.ctx.moveTo(this.x,this.y);
         this.ctx.lineTo(this.x + this.side, this.y + this.side/2);
@@ -80,7 +84,7 @@ class Player
         this.ctx.lineTo(this.x, this.y);
         this.ctx.closePath();
         this.ctx.stroke();
-        
+        this.ctx.fill();
         this.ctx.restore();
     }
 
@@ -89,24 +93,38 @@ class Player
         // movement
         if(this.keysPressed.ArrowRight || this.keysPressed.d){
             this.x += this.speed;
-            this.gunPoint.x += this.speed;
         }
         if(this.keysPressed.ArrowLeft || this.keysPressed.a){
             this.x -= this.speed;
-            this.gunPoint.x -= this.speed;
         }
         if(this.keysPressed.ArrowUp || this.keysPressed.w){
             this.y -= this.speed;
-            this.gunPoint.y -= this.speed;
         }
         if(this.keysPressed.ArrowDown || this.keysPressed.s){
             this.y += this.speed;
-            this.gunPoint.y += this.speed;
         }
-        
         // this one is for shooting
         if(this.keysPressed[" "]){
             this.shoot();
+            console.log(this.base);
+        }
+
+        // box collision detection
+        if(this.x + this.side > width)
+        {
+            this.x = width - this.side - this.ctx.lineWidth;
+        }
+        if(this.x < 0)
+        {
+            this.x = 0 + this.ctx.lineWidth;
+        }
+        if(this.y + this.side > height)
+        {
+            this.y = height - this.side - this.ctx.lineWidth;
+        }
+        if(this.y < 0)
+        {
+            this.y = 0 + this.ctx.lineWidth;
         }
     }
 
@@ -147,6 +165,8 @@ class Player
     {
 
         // we could have also used the no. of frames !!
+        this.gunPoint = this.getGunPointLocation();
+
         if(this.totalShotsThisInterval == 0)
         {
             this.lastShootingTime = Date.now();
@@ -167,5 +187,22 @@ class Player
                 this.totalShots += this.shotsAtOneTime;
             }
         }
+    }
+
+    getGunPointLocation() {
+        return {
+            x: this.x + this.side,
+            y: this.y + this.side / 2
+        };
+    }
+
+    calculate_base(){
+        let hyp = euclid_dist({x1:this.x,y1:this.y},{x2:(this.x+this.side),y2:(this.y+this.side/2)});
+        let perp = euclid_dist({x1:this.x,y1:this.y},{x2:this.x,y2:this.y+this.side/2});
+
+        // console.log(hyp, perp);
+        // debugger;
+        let base = Math.sqrt((hyp*hyp) - (perp*perp));
+        return base;
     }
 }

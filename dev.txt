@@ -4,7 +4,7 @@ TO LEARN
     TILEMAP AND CAMERA
 
     hwo to make "server .. up and running "appear like the output of banner ?
-    DONE
+    DONE    
         i need to read gameprogrammingpatters to code the movement part
 
 
@@ -36,6 +36,11 @@ i figured that delay should nt be there in the bullet class
 
 3/10/2020 4:20 pm
 
-do the destroy method of bullet class
 use frames to evaluate next time for shooting
 implement the gunPoints array
+
+3/26/2020 9:09 pm
+
+we should replace the server.js file with npm module server
+should'nt every object have its own ui config object with all the information that should be passed to the ui
+render object during the loop. every entitie's UI render function must be called from its own render method
