@@ -70,17 +70,22 @@ function euclid_dist({x1,y1},{x2,y2})
     )
 }
 
-function drawBox(x, y, width, height, value, progressBar=false)
+// this should be in the UI class.
+function drawBox(x, y, width, height, value, bar=false)
 {
     // value should always be out of 100
     ctx.beginPath();
     ctx.rect(x, y, width, height);
+    console.assert(ctx.lineWidth == 1, ctx.strokeStyle);
     ctx.stroke()
     ctx.closePath();
-    if(progressBar)
+    if(bar)
     {
         ctx.beginPath();
-        ctx.rect(x, y, value, height);
+        // line width is added to the x,y location so that there is no overlapping between the boxes.
+        // and 2 * width is subtracted from width and height because 1st time to accomodate the linewidth overlapping
+        // and second time because of the increase in the x,y locations in the 1st place
+        ctx.rect(x + ctx.lineWidth, y + ctx.lineWidth, value - 2 * ctx.lineWidth , height - 2 * ctx.lineWidth);
         ctx.fill();
         ctx.closePath();
     }

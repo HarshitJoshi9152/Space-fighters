@@ -10,7 +10,7 @@ TO LEARN
 
 TODO
     make experimentation branch
-    setup npm start;
+    DONE setup npm start;
     DONE visit opengameart.com or other platforms to find game art / sprites related to our game.
 
 selfProgress
@@ -41,6 +41,31 @@ implement the gunPoints array
 
 3/26/2020 9:09 pm
 
-we should replace the server.js file with npm module server
+we shouldnt replace the server.js file with npm module server
 should'nt every object have its own ui config object with all the information that should be passed to the ui
 render object during the loop. every entitie's UI render function must be called from its own render method
+
+3/27/2020 7:58 pm
+
+did npm init.
+we should make a Spaceship parent class.
+TODO : 
+    1. learn about yarn and npm.
+    2. learn object oriented programming in javascript.
+    3. watch game development in javascript playlists on youtube.
+    4. coding math playlist on youtube.
+    5. read gameprogrammingpatters book
+
+WHY ....... Octal escape sequences are not allowed in template strings. ???
+
+FPS counter rendering should be moved to the UI class.
+there should be only one update / render loop for all entities.
+
+obs
+    it doesnt matter if we do name = function(){code} or name(){code} to write class methods
+
+remember to gitignore the node_modules folder when we install anything
+
+coded for less than an hour today.
+    fixed the progress bar rendering
+    and found an error in the player class.

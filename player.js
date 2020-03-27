@@ -23,7 +23,7 @@ we could have calculated this.base using the euclid_dist function oncy
 
 Gunpoints should be an array
 
-TODO :: 1.calculate the velocity of the plane.
+TODO :: 1.calculate the velocity of the plane. EDIT (3/27/2020): wouldnt the velocity always be the speed variable lol.
         2. add the velocity to the bulletSpeed when firing.
         3.rendering health bar.
         4. i dont think we need this.ctx.lineTo(this.x, this.y);
@@ -31,6 +31,9 @@ TODO :: 1.calculate the velocity of the plane.
 FIXED_ERROR :: there is a weird red traingle thing being rendered
          between the gunPoint and the bullets
 
+ERROR ::
+    1. the player is able to unable to move in top-left direction directly like it is able to move in the top-right,
+       bottom-left or bottom-right.
 
 */
 
@@ -189,14 +192,14 @@ class Player
         }
     }
 
-    getGunPointLocation() {
+    getGunPointLocation = function() {
         return {
             x: this.x + this.side,
             y: this.y + this.side / 2
         };
     }
 
-    calculate_base(){
+    calculate_base = function(){
         let hyp = euclid_dist({x1:this.x,y1:this.y},{x2:(this.x+this.side),y2:(this.y+this.side/2)});
         let perp = euclid_dist({x1:this.x,y1:this.y},{x2:this.x,y2:this.y+this.side/2});
 

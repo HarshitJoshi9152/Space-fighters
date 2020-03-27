@@ -75,6 +75,9 @@ class Bullet
         //     }
         // })
 
+        // the above code would have worked if we had compared the objects after removing the
+        // parent property that made it a circular.
+
         // wait a second shouldnt we just remove the 1st element because it ought to be the first 
         this.parent.bullets.splice(0,1);
     }

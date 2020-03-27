@@ -1,0 +1,27 @@
+{
+  "name": "space-fighters",
+  "version": "1.0.0",
+  "description": "space fighting game",
+  "main": "index.html",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HarshitJoshi9152/Space-fighters.git"
+  },
+  "keywords": [
+    "javascript",
+    "game",
+    "space",
+    "fighting",
+    "spaceships"
+  ],
+  "author": "Harshit Joshi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HarshitJoshi9152/Space-fighters/issues"
+  },
+  "homepage": "https://github.com/HarshitJoshi9152/Space-fighters#readme"
+}

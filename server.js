@@ -1,3 +1,5 @@
+// implement silent mode and also use streams API to transfer files
+
 const http = require("http");
 const fs = require("fs");
 
@@ -58,4 +60,5 @@ let gameServer = http.createServer((req, res)=>
 gameServer.listen(PORT, HOSTNAME, ()=>
 {
     console.log("Server is up and running on", HOSTNAME, "at", PORT);
+    console.log(`\x1b[91mVisit ${HOSTNAME + ":" + PORT} to play space-fighters.\x1b[0m`)
 })
