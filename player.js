@@ -26,14 +26,14 @@ Gunpoints should be an array
 TODO :: 1.calculate the velocity of the plane. EDIT (3/27/2020): wouldnt the velocity always be the speed variable lol.
         2. add the velocity to the bulletSpeed when firing.
         3.rendering health bar.
-        4. i dont think we need this.ctx.lineTo(this.x, this.y);
+        4. i dont think we need this.ctx.lineTo(this.x, this.y); DONE
+todo    5. make a keyboard class for userinput and a load method to add self to renderlayers
 
 FIXED_ERROR :: there is a weird red traingle thing being rendered
          between the gunPoint and the bullets
 
 ERROR ::
-    1. the player is able to unable to move in top-left direction directly like it is able to move in the top-right,
-       bottom-left or bottom-right.
+    no errors
 
 */
 
@@ -43,12 +43,11 @@ class Player
     constructor(name, ctx)
     {
         this.name = name;
-        this.shootdelay = 100; // time in ms
         this.x = 100;
         this.y = 100;
         this.speed = 10;
         this.side = 50;
-        this.median = this.calculate_base();
+        // this.median = this.calculate_base();
         this.health = 100;
         
         this.gunPoint = this.getGunPointLocation()
@@ -67,9 +66,12 @@ class Player
         // BULLETS
         this.bullets = [];
         this.bulletSpeed = this.speed + 10;
+        this.bulletRadius = 2;
+        this.shotsAtOneTime = 1; // all the shots are drawn at the same place so you cannot tell how many shots were fired
+        this.shootdelay = 50; // time in ms
+
         this.lastShootingTime;
         this.totalShotsThisInterval = 0;
-        this.shotsAtOneTime = 1;
 
         this.someKeyIsPressed = false;
         this.ctx = ctx;
@@ -77,9 +79,11 @@ class Player
     }
     render = function()
     {
+        // render spaceship
         this.ctx.save();
         this.ctx.fillStyle = "#787878";
         this.ctx.strokeStyle = "#868676";
+
         this.ctx.beginPath();
         this.ctx.moveTo(this.x,this.y);
         this.ctx.lineTo(this.x + this.side, this.y + this.side/2);
@@ -88,7 +92,15 @@ class Player
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.fill();
+
         this.ctx.restore();
+
+        // rendering bullets
+        for (let bullet of this.bullets) {
+            bullet.render()
+        };
+        // render its UI
+        ui.renderHealthBar(660, 10, 100, 10, 100)
     }
 
     update = function()
@@ -109,10 +121,9 @@ class Player
         // this one is for shooting
         if(this.keysPressed[" "]){
             this.shoot();
-            console.log(this.base);
         }
 
-        // box collision detection
+        // window collision detection
         if(this.x + this.side > width)
         {
             this.x = width - this.side - this.ctx.lineWidth;
@@ -129,8 +140,13 @@ class Player
         {
             this.y = 0 + this.ctx.lineWidth;
         }
-    }
 
+        // updating bullets
+        for (let bullet of this.bullets) {
+            bullet.update()
+        };
+    }
+    // we should add this method to player.load
     ready = function() // shouldnt ready be called listen ? and we should have a new function called "move" for movement
     {
         this.isReady = true;
@@ -148,7 +164,7 @@ class Player
         })
         document.addEventListener("keyup",(event) => 
         {
-            let {key, keyCode} = event;
+            let {key} = event;
 
             if(this.keysPressed[key])
             {
@@ -164,6 +180,16 @@ class Player
         })
     }
 
+    compute = function()
+    {
+        if (this.isReady)
+        {
+            this.update();
+            this.render();
+        }
+    }
+
+    // functionalities
     shoot = function()
     {
 
@@ -175,7 +201,7 @@ class Player
             this.lastShootingTime = Date.now();
             for(let i = 0; i < this.shotsAtOneTime; i++)
             {
-                this.bullets.push(new Bullet(this.gunPoint, this.bulletSpeed, this.damage, this, this.ctx));
+                this.bullets.push(new Bullet(this.gunPoint, this.bulletSpeed, this.damage, this.bulletRadius, this, this.ctx));
                 this.totalShotsThisInterval += this.shotsAtOneTime;
                 this.totalShots += this.shotsAtOneTime;
             }
@@ -185,13 +211,28 @@ class Player
             this.lastShootingTime = Date.now();
             for(let i = 0; i < this.shotsAtOneTime; i++)
             {
-                this.bullets.push(new Bullet(this.gunPoint, this.bulletSpeed, this.damage, this, this.ctx));
+                this.bullets.push(new Bullet(this.gunPoint, this.bulletSpeed, this.damage, this.bulletRadius, this, this.ctx));
                 this.totalShotsThisInterval += this.shotsAtOneTime;
                 this.totalShots += this.shotsAtOneTime;
             }
         }
     }
 
+    setScale = function(scale /* between 0 or 1 unless interpreted as a percentage value */)
+    {
+        if (scale > 0 && scale < 1)
+        {
+            this.side *= scale;
+            this.bulletRadius *= scale;
+        }
+        else
+        {
+            this.side *= (scale/100)
+            this.bulletRadius *= (scale/100)
+        }
+    }
+
+    // helper methods
     getGunPointLocation = function() {
         return {
             x: this.x + this.side,
@@ -199,13 +240,14 @@ class Player
         };
     }
 
-    calculate_base = function(){
-        let hyp = euclid_dist({x1:this.x,y1:this.y},{x2:(this.x+this.side),y2:(this.y+this.side/2)});
-        let perp = euclid_dist({x1:this.x,y1:this.y},{x2:this.x,y2:this.y+this.side/2});
+    // calculate_base = function(){
+    //     // lol why did we even write this method we could have used this.side
+    //     let hyp = euclid_dist({x1:this.x,y1:this.y},{x2:(this.x+this.side),y2:(this.y+this.side/2)});
+    //     let perp = euclid_dist({x1:this.x,y1:this.y},{x2:this.x,y2:this.y+this.side/2});
 
-        // console.log(hyp, perp);
-        // debugger;
-        let base = Math.sqrt((hyp*hyp) - (perp*perp));
-        return base;
-    }
+    //     // console.log(hyp, perp);
+    //     // debugger;
+    //     let base = Math.sqrt((hyp*hyp) - (perp*perp));
+    //     return base;
+    // }
 }

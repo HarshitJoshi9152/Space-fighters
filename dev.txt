@@ -69,3 +69,17 @@ remember to gitignore the node_modules folder when we install anything
 coded for less than an hour today.
     fixed the progress bar rendering
     and found an error in the player class.
+
+5/18/2020 10:57 pm
+IDEA
+    procedurally generating the background with perlin noise and also the levels
+
+5/20/2020 8:04 pm
+
+Now the rendering and updating of bullets is handled by their parent player Object
+todo implement the concept of deltatime
+
+improve UI and implement enemies and Levels
+
+DONE:
+    refactored some code.

@@ -6,43 +6,38 @@
 // to easily render those components. However the UI library could also contain
 // some commanly used componenty like HealthBar.
 
+// !UI class should provide the API for objects to draw ui elements like health bars
+// !but the actual 'call' for rendering should be made from the object itself to who the
+// !attributes rendered belongs
 
 class UI
 {
     constructor(ctx)
     {
         this.ctx = ctx;
-
-        this.healthBar = {
-            x:660,
-            y:10,
-            width:100,
-            height:10,
-            health:40,
-            render: function()
-            {
-                ctx.save();
-                ctx.strokeStyle = "#989898";
-                ctx.fillStyle = "#121232"
-                // we couldnt call this.drawBox because this here refers to the healthBar object.
-                drawBox(this.x, this.y, this.width, this.height, this.health, true);
-                ctx.restore();
-            }
-        };
-
-        this.components = [this.healthBar];
     }
 
-    render = function()
+    renderHealthBar = function(x, y, width, height, health, strokeStyle = "#989898", fillStyle = "#121232")
     {
-        for (let i in this.components){
-            this.components[i].render();
-        }
+        this.ctx.save();
+        this.ctx.strokeStyle = strokeStyle;
+        this.ctx.fillStyle = fillStyle;
+        if (health > width)
+        {
+            this.drawBox(x, y, width, height, width, true);
+            this.ctx.restore();
+        } else
+            this.drawBox(x, y, width, height, health, true);
+        // ctx.strokeStyle = "white";
+        // ctx.strokeText("Health", x, y);
+        this.ctx.restore();
     }
 
     drawBox = function(x, y, width, height, value, bar=false)
     {
         // value should always be out of 100
+        this.ctx.beginPath();
+
         this.ctx.rect(x, y, width, height);
         this.ctx.stroke()
         if(bar)
@@ -52,5 +47,7 @@ class UI
         }
         else
             this.ctx.strokeText(value, x, y);
+
+        this.ctx.closePath();
     }
 }

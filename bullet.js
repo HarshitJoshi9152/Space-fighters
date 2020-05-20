@@ -15,14 +15,14 @@ issue ::
 
 class Bullet
 {
-    constructor({x, y}, s, d, parent, ctx)
+    constructor({x, y}, speed, dmg, radius, parent, ctx)
     {
         // code
         this.x = x,
         this.y = y,
-        this.speed = s,
-        this.damage = d,
-        this.radius = 2,
+        this.speed = speed,
+        this.damage = dmg,
+        this.radius = radius,
         this.parent = parent,
 
         this.ctx = ctx;
@@ -46,9 +46,8 @@ class Bullet
         // draw the bullet
         this.ctx.save();
         this.ctx.beginPath();
-        this.ctx.fillStyle = "red";
+        this.ctx.fillStyle = "#FF6347";
         this.ctx.ellipse(this.x, this.y, this.radius, this.radius, 2*Math.PI, 0, 2*Math.PI);
-        this.ctx.stroke();
         this.ctx.fill();
         this.ctx.closePath();
         this.ctx.restore();
@@ -61,24 +60,7 @@ class Bullet
     }
 
     destroy = function()
-    {
-        // i have an interesting theory as to why only half the bullets were being destroyed
-        // console.log(this.parent.bullets.length)
-        // this.parent.bullets.find((val, index)=>
-        // {
-        //     // code
-        //     try{
-        //         JSON.stringify(val);
-        //     } catch(e){
-        //         this.parent.bullets.splice(index,1);
-        //         console.log(" :: spliced");
-        //     }
-        // })
-
-        // the above code would have worked if we had compared the objects after removing the
-        // parent property that made it a circular.
-
-        // wait a second shouldnt we just remove the 1st element because it ought to be the first 
+    { 
         this.parent.bullets.splice(0,1);
     }
 }
