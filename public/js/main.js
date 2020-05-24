@@ -20,7 +20,7 @@ let framesPerSec = 0;
 let framesThisSecond = 0;
 let currentFrameTime = null;
 
-function __loop__(time = null)
+(function __loop__(time = null)
 {
     // console.log(ctx.fillStyle) clean here
     updateFPS();
@@ -33,9 +33,9 @@ function __loop__(time = null)
     }
 
     requestAnimationFrame(__loop__,time);
-}
+})()
 
-__loop__();
+
 
 function drawFPSCounter() {
     ctx.strokeStyle = "white";
@@ -55,16 +55,3 @@ function updateFPS(){
         framesThisSecond++;
     }
 }
-
-/*
-// i didnt need to code this lol 
-function euclid_dist({x1,y1},{x2,y2})
-{
-    // upto how many decimals should we consider accuracy
-    return Math.abs(
-        Math.sqrt(
-            ((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1))
-        )
-    )
-}
-*/

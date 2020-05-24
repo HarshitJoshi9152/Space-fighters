@@ -2,7 +2,7 @@
 
 const http = require("http");
 const fs = require("fs");
-
+const chalk = require('chalk');
 const HOSTNAME = "127.0.0.1";
 const PORT = 8080;
 

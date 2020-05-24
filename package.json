@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "node server.js",
-    "start": "node server.js"
+    "start": "node ./lol.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/HarshitJoshi9152/Space-fighters/issues"
   },
-  "homepage": "https://github.com/HarshitJoshi9152/Space-fighters#readme"
+  "homepage": "https://github.com/HarshitJoshi9152/Space-fighters#readme",
+  "dependencies": {
+    "serve": "^11.3.1"
+  }
 }
